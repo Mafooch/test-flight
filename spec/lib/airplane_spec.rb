@@ -15,17 +15,24 @@ describe Airplane do
     it "returns 150 for horsepower" do
       expect(my_plane.horsepower).to eq(150)
     end
+    it "returns false for @started" do
+      expect(my_plane.started).to eq(false)
+    end
+    it "returns false for @flying" do
+      expect(my_plane.flying).to eq(false)
+    end
+    it "returns 5 for @fuel" do
+      expect(my_plane.fuel).to eq(5)
+    end
   end
 
   describe "#land" do
     context "When airplane not has not been started" do
       unstarted_airplane = Airplane.new("cesna", 10, 150)
-
       it "returns 'airplane not started, please start'" do
         expect(unstarted_airplane.land).to eq "airplane not started, please start"
       end
     end
-
     context "When airplane has been started but hasn't taken off" do
       started_airplane = Airplane.new("cesna", 10, 150)
       started_airplane.start
@@ -77,7 +84,6 @@ describe Airplane do
   describe "#start" do
     context "when the plane hasn't been started yet" do
       unstarted_airplane = Airplane.new("cesna", 10, 150)
-
       it "@started will be false" do
         expect(unstarted_airplane.started).to eq false
       end
@@ -91,6 +97,7 @@ describe Airplane do
       end
     end
 
+
     context "when the plane has already been started" do
       started_airplane = Airplane.new("cesna", 10, 150)
       started_airplane.start
@@ -100,5 +107,36 @@ describe Airplane do
       end
     end
   end
+
+  describe "#not_enough_fuel"
+
+
+    context "when fuel to low to start" do
+      low_fuel_airplane = Airplane.new("cesna", 10, 150)
+      low_fuel_airplane.instance_variable_set(:@fuel, 1)
+      it "when started returns 'You don't have enough fuel!'" do
+        expect(low_fuel_airplane.start).to eq "You don't have enough fuel!"
+      end
+    end
+
+    context "started but fuel to low to takeoff" do
+      low_fuel_airplane = Airplane.new("cesna", 10, 150)
+      low_fuel_airplane.instance_variable_set(:@started, true)
+      low_fuel_airplane.instance_variable_set(:@fuel, 1)
+      # binding.pry
+      it "when takeoff returns 'You don't have enough fuel!'" do
+        expect(low_fuel_airplane.takeoff).to eq "You don't have enough fuel!"
+      end
+    end
+
+    context "flying but not enough fuel to land" do
+      low_fuel_airplane = Airplane.new("cesna", 10, 150)
+      low_fuel_airplane.instance_variable_set(:@started, true)
+      low_fuel_airplane.instance_variable_set(:@flying, true)
+      low_fuel_airplane.instance_variable_set(:@fuel, 1)
+      it "when started returns 'You don't have enough fuel!'" do
+        expect(low_fuel_airplane.land).to eq "You don't have enough fuel!"
+      end
+    end
 
 end
