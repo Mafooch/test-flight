@@ -56,7 +56,4 @@ class Airplane
   def not_enough_fuel
     "You don't have enough fuel!"
   end
-
 end
-
-# my_plane = Airplane.new("cesna", 10, 150)
