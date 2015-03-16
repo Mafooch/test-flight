@@ -1,17 +1,13 @@
 require 'pry'
 require_relative "../../lib/airplane"
 
-new_plane = Airplane.new("leer", 100, 300)
+new_plane = Airplane.new("lear", 100, 300)
 describe Airplane do
-  let(:lear_jet) { Airplane.new("leer", 100, 300) }
-  let(:low_fuel_airplane) do
-    new_plane.instance_variable_set(:@fuel, 1)
-    new_plane
-  end
+  let(:lear_jet) { Airplane.new("lear", 100, 300) }
 
   describe "#initialize" do
     it "returns cesna for type" do
-      expect(lear_jet.type).to eq("leer")
+      expect(lear_jet.type).to eq("lear")
     end
     it "returns 10 for wingloading" do
       expect(lear_jet.wing_loading).to eq(100)
@@ -100,6 +96,11 @@ describe Airplane do
   end
 
   describe "#not_enough_fuel"
+    let(:low_fuel_airplane) do
+      new_plane.instance_variable_set(:@fuel, 1)
+      new_plane
+    end
+
     context "when fuel to low to start" do
       it "when started returns 'You don't have enough fuel!'" do
         low_fuel_airplane
@@ -120,5 +121,5 @@ describe Airplane do
         low_fuel_airplane.instance_variable_set(:@flying, true)
         expect(low_fuel_airplane.land).to eq "You don't have enough fuel!"
       end
-    end
+  end
 end
